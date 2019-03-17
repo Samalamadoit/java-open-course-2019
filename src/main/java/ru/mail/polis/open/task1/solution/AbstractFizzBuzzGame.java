@@ -1,12 +1,13 @@
 package ru.mail.polis.open.task1.solution;
 
 import ru.mail.polis.open.task1.FizzBuzz;
+import ru.mail.polis.open.task1.IFizzBuzz;
 
 /**
  * @author mikhail.nechaev
  * Since 04/03/2019
  */
-public abstract class AbstractFizzBuzzGame implements FizzBuzz {
+public abstract class AbstractFizzBuzzGame implements IFizzBuzz {
 
     private static final int UPPER_BOUND = 100;
     private static final int LOWER_BOUND = 0;

@@ -2,6 +2,12 @@ package ru.mail.polis.open.task3;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Stack;
+
 /**
  * Для проверки класса на корректность следует использовать тесты.
  * Команда {@code ./gradlew clean build} должна завершаться корректно.
@@ -19,11 +25,32 @@ import org.jetbrains.annotations.Nullable;
  * Внутри package ru.mail.polis.open.task3
  * В нём будут видны public / protected / package_private методы
  */
+
 public final class CorrectBracketSequenceChecker {
 
-    private CorrectBracketSequenceChecker() {
+    private static Stack<Character> brackets = new Stack<>();
+    private static int count = 0;
+    static int countOfCorrectTest = 0;
+    static int countOfFailTests = 0;
+    static int numberOfLastCorrectTest = 0;
+
+    CorrectBracketSequenceChecker() {
         /* todo: append code if needed */
     }
+
+    public static void main(String[] args) throws IOException {
+        String res = readBracedSequence();
+        System.out.println(checkSequence(res));
+    }
+
+    private static String readBracedSequence() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        String result = bufferedReader.readLine();
+        result = result.trim();
+
+        return result;
+    }
+
 
     /**
      * Метод проверяющий скобочную последовательность на правильность.
@@ -49,7 +76,53 @@ public final class CorrectBracketSequenceChecker {
      *                                  или если входная строка содержит больше ста символов
      */
     public static boolean checkSequence(@Nullable String sequence) {
-        throw new UnsupportedOperationException("todo: implement this");
+        if (sequence == null || sequence.length() == 0 || sequence.length() > 100) {
+            throw new IllegalArgumentException("Incorrect input string");
+        }
+
+        char[] bracketsCharse = sequence.toCharArray();
+        for (char seq : bracketsCharse
+        ) {
+            switch (seq) {
+                case '(':
+                    brackets.push(seq);
+                    count++;
+                    break;
+                case '{':
+                    brackets.push(seq);
+                    count++;
+                    break;
+                case '[':
+                    brackets.push(seq);
+                    count++;
+                    break;
+                case ')':
+                    if (count > 0 && brackets.pop() == '(') {
+                        count--;
+                    } else {
+                        return false;
+                    }
+                    break;
+                case '}':
+                    if (count > 0 && brackets.pop() == '{') {
+                        count--;
+                    } else {
+                        return false;
+                    }
+                    break;
+                case ']':
+                    if (count > 0 && brackets.pop() == '[') {
+                        count--;
+                    } else {
+                        return false;
+                    }
+                    break;
+                default:
+                    throw new IllegalArgumentException();
+            }
+
+        }
+        return count == 0 && brackets.size() == 0;
     }
 
     /**

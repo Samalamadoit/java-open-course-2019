@@ -35,7 +35,7 @@ class ConsoleFizzBuzzGameTest {
                 )
             )
         );
-        fizzBuzz = new ConsoleFizzBuzzGame(DELIMITER);
+        //fizzBuzz = new ConsoleFizzBuzzGame(DELIMITER);
     }
 
     @Test
